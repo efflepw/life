@@ -1,0 +1,16 @@
+.container {
+    background: linear-gradient(90deg, rgba(47, 32, 47, 1) 0%, rgba(39, 39, 61, 1) 50%, rgba(28, 43, 41, 1) 100%);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.row {
+    display: flex;
+}
+
+.square {
+    display: flex;
+    background-color: black;
+}

@@ -10,6 +10,7 @@ const App = () => {
             <Provider store={store}>
                 <Header />
                 <Board />
+                {/* <Sidebar /> */}
             </Provider>
         </WindowSizeProvider>
     )

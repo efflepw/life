@@ -49,7 +49,7 @@ export const createEmptyBoard = (height: number, width: number): ThunkType => as
 
 export default boardReducer
 
-
+// types
 type BoardInitialStateType = typeof initialState
 type BoardActionsTypes = InferActionsTypes<typeof boardActions>
 type ThunkType = BaseThunkType<BoardActionsTypes>

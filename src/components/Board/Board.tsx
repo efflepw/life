@@ -2,24 +2,28 @@ import { FC, useEffect } from 'react'
 import { useWindowSize } from '../../hooks'
 import { HEADER_HEIGHT_PX, SQUARE_SIZE, SQUARE_MARGIN } from '../../consts/common'
 import classes from './Board.module.scss'
+import { PointType } from '../../types/board'
 
-const Square = () => {
+const Square: FC<SquareType> = ({ value, click }) => {
     const squareSizeStyles = {
         width: SQUARE_SIZE,
         height: SQUARE_SIZE,
         margin: `${SQUARE_MARGIN}px`,
+        backgroundColor: value ? '#fff' : '#000',
     }
 
-    return <div className={classes.square} style={squareSizeStyles}></div>
+    return <div className={classes.square} style={squareSizeStyles} onClick={click}></div>
 }
 
-const Board: FC<PropsType> = ({ board, createEmptyBoard }) => {
+const Board: FC<PropsType> = ({ board, createEmptyBoard, startBubbleAnimation }) => {
     const { height, width } = useWindowSize()
+
+    console.log('Board Rerender')
 
     const squares = board.map((bRow, rIdx) => (
         <div className={classes.row} key={rIdx}>
             {bRow.map((bSquare, squareIdx) => (
-                <Square key={squareIdx} />
+                <Square key={squareIdx} value={bSquare} click={() => startBubbleAnimation({ x: rIdx, y: squareIdx })} />
             ))}
         </div>
     ))
@@ -43,6 +47,11 @@ export interface ArticleStateInterface {
 
 export interface ArticleDispatchInterface {
     createEmptyBoard: (height: number, width: number) => void
+    startBubbleAnimation: (startPoint: PointType) => void
 }
 
 type PropsType = ArticleStateInterface & ArticleDispatchInterface
+type SquareType = {
+    value: number
+    click: () => void
+}

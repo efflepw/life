@@ -2,9 +2,11 @@ import { createStore, combineReducers, compose, applyMiddleware, Action } from '
 import thunkMiddleware, { ThunkAction } from 'redux-thunk'
 
 import boardReducer from './board'
+import animationReducer from './animation'
 
 let reducers = combineReducers({
     board: boardReducer,
+    animation: animationReducer,
 })
 
 

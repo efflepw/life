@@ -12,6 +12,7 @@ export const WindowSizeProvider: FC<PropsType> = ({ children }) => {
         setWidth(window.innerWidth)
     }
 
+    // callback on window resize event
     useEffect(() => {
         updateWindowDimensions()
         window.addEventListener('resize', updateWindowDimensions)

@@ -43,7 +43,6 @@ export const createEmptyBoard = (height: number, width: number): ThunkType => as
 
         dispatch(boardActions.setBoardData({ cHeight: height, cWidth: width, board }))
     }        
-    
 }
 
 

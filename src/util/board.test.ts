@@ -57,9 +57,9 @@ describe('board filling', () => {
     })
 
     test('is board filled', () => {
-        const board1 = [[0,0,0],[0,0,0],[0,0,0]]
-        const board2 = [[0,0,0],[0,1,0],[0,0,0]]
-        const board3 = [[1,1,1],[1,1,1],[1,1,1]]
+        const board1 = [[0,0,0],[0,0,0],[0,0,0],[0,0,0]]
+        const board2 = [[0,0,0],[0,1,0],[0,0,0],[0,0,0]]
+        const board3 = [[1,1,1],[1,1,1],[1,1,1],[1,1,1]]
 
         expect(isBoardFilled(board1)).toBeFalsy()
         expect(isBoardFilled(board2)).toBeFalsy()

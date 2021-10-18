@@ -43,7 +43,7 @@ export const isBoardFilled:isBoardFilledType = (board) => {
     const firstRowSum = board[0].reduce((ac, cv) => ac + cv , 0)
     const lastRowSum = board[board.length - 1].reduce((ac, cv) => ac + cv , 0)
 
-    return firstRowSum === lastRowSum && firstRowSum === board.length
+    return firstRowSum === lastRowSum && firstRowSum === board[0].length
 }
 
 type fillBoardType = (board: BoardType, points: PointType[]) => BoardType

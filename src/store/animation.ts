@@ -38,12 +38,12 @@ export const bubbleAnimation = (startPoint: PointType, step: number): ThunkType 
     dispatch(animationActions.setBoardData({ board }))
     dispatch(animationActions.setAnimationData({ step }))
 
-    if (step < 120) {
+    const shouldContinue = step % 10 === 0 ? !isBoardFilled(board) : true
+
+    if (shouldContinue) {
         setTimeout(() => {
             dispatch(bubbleAnimation(startPoint, step + 1))
         }, 1)
-    } else {
-        console.log(isBoardFilled(board), board)
     }
 }
 

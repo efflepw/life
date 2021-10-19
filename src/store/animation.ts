@@ -1,6 +1,8 @@
+import { isEqual } from "lodash";
+
 import { InferActionsTypes, BaseThunkType } from './store'
 import { boardActions } from './board'
-import { fillBoard, isBoardFilled } from '../util/board'
+import { fillBoard, isBoardFilledWithSameValues } from '../util/board'
 import { makeBubbleAnimationStep } from '../util/animation'
 import { PointType } from '../types/board'
 
@@ -33,14 +35,14 @@ export const animationActions = {
 
 // thunks
 export const bubbleAnimation = (startPoint: PointType, step: number): ThunkType => async (dispatch, getState) => {
-    const initialBoard  = getState().board.board
-    const board = makeBubbleAnimationStep(initialBoard, startPoint, step)
+    const boardState = getState().board
+    const board = makeBubbleAnimationStep(boardState.board, startPoint, step)
+    
     dispatch(animationActions.setBoardData({ board }))
-    dispatch(animationActions.setAnimationData({ step }))
 
-    const shouldContinue = step % 10 === 0 ? !isBoardFilled(board) : true
+    const isBoardFilledRes = isBoardFilledWithSameValues(board)
 
-    if (shouldContinue) {
+    if (step < boardState.maxSteps && !isBoardFilledRes) {
         setTimeout(() => {
             dispatch(bubbleAnimation(startPoint, step + 1))
         }, 1)

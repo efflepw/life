@@ -7,6 +7,7 @@ const initialState = {
     board: [[]] as number[][],
     cWidth: 0,
     cHeight: 0,
+    maxSteps: 0
 }
 
 
@@ -41,7 +42,9 @@ export const createEmptyBoard = (height: number, width: number): ThunkType => as
     if (boardState.cHeight !== height || boardState.cWidth !== width) {
         const board = emptyBoard(height, width)
 
-        dispatch(boardActions.setBoardData({ cHeight: height, cWidth: width, board }))
+        const maxSteps = board.length + board[0].length
+
+        dispatch(boardActions.setBoardData({ cHeight: height, cWidth: width, board, maxSteps }))
     }        
 }
 

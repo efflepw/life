@@ -42,7 +42,7 @@ export const makeBubbleAnimationStep: bubbleAnimationType = (board, startPoint, 
 
     const pointsToFill = [...toFillBottomLeft, ...toFillLeftTop, ...toFillTopRight, ...toFillRightBottom, topPoint, rightPoint, bottomPoint, leftPoint]
 
-    const filledBoard = fillBoard(board, pointsToFill)
+    const filledBoard = fillBoard([...board], pointsToFill)
 
     return filledBoard
 }

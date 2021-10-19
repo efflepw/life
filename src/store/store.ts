@@ -2,10 +2,12 @@ import { createStore, combineReducers, compose, applyMiddleware, Action } from '
 import thunkMiddleware, { ThunkAction } from 'redux-thunk'
 
 import boardReducer from './board'
+import gameReducer from './game'
 import animationReducer from './animation'
 
 let reducers = combineReducers({
     board: boardReducer,
+    game: gameReducer,
     animation: animationReducer,
 })
 

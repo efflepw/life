@@ -1,5 +1,5 @@
 import *  as CNSTS from '../consts/common'
-import { emptyBoard, fillBoard, isBoardFilled } from './board'
+import { emptyBoard, fillBoard, isBoardFilledWith, isBoardFilledWithSameValues } from './board'
 
 describe('board creation: ', () => {
     test('3x3', () => {
@@ -28,6 +28,10 @@ describe('board creation: ', () => {
 
 
 describe('board filling', () => {
+    const board1 = [[0,0,0],[0,0,0],[0,0,0],[0,0,0]]
+    const board2 = [[0,0,0],[0,1,0],[0,0,0],[0,0,0]]
+    const board3 = [[1,1,1],[1,1,1],[1,1,1],[1,1,1]]    
+    
     test('1 element', () => {
         const board = [[0,0,0],[0,0,0],[0,0,0]]
         const boardToBe = [[0,0,0],[0,1,0],[0,0,0]]
@@ -56,13 +60,18 @@ describe('board filling', () => {
         expect(fillBoard(board, [{ x: 1, y: 1 }])).toEqual(board)
     })
 
-    test('is board filled', () => {
-        const board1 = [[0,0,0],[0,0,0],[0,0,0],[0,0,0]]
-        const board2 = [[0,0,0],[0,1,0],[0,0,0],[0,0,0]]
-        const board3 = [[1,1,1],[1,1,1],[1,1,1],[1,1,1]]
+    test('is board filled with', () => {
+        expect(isBoardFilledWith(board1, 0)).toBeTruthy()
+        expect(isBoardFilledWith(board1, 1)).toBeFalsy()
+        expect(isBoardFilledWith(board2, 0)).toBeFalsy()
+        expect(isBoardFilledWith(board2, 1)).toBeFalsy()
+        expect(isBoardFilledWith(board3, 0)).toBeFalsy()
+        expect(isBoardFilledWith(board3, 1)).toBeTruthy()
+    })
 
-        expect(isBoardFilled(board1)).toBeFalsy()
-        expect(isBoardFilled(board2)).toBeFalsy()
-        expect(isBoardFilled(board3)).toBeTruthy()
+    test('is board filled with same value', () => {
+        expect(isBoardFilledWithSameValues(board1)).toBeTruthy()
+        expect(isBoardFilledWithSameValues(board2)).toBeFalsy()
+        expect(isBoardFilledWithSameValues(board3)).toBeTruthy()
     })
 })

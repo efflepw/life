@@ -8,7 +8,8 @@ const Square: FC<SquareType> = ({ value, click }) => {
     const squareSizeStyles = {
         width: SQUARE_SIZE,
         height: SQUARE_SIZE,
-        margin: `${SQUARE_MARGIN}px`,
+        border: `${SQUARE_MARGIN}px solid transparent`,
+        backgroundClip: 'padding-box',
         backgroundColor: value ? '#fff' : '#000',
     }
 
@@ -17,8 +18,6 @@ const Square: FC<SquareType> = ({ value, click }) => {
 
 const Board: FC<PropsType> = ({ board, createEmptyBoard, startBubbleAnimation }) => {
     const { height, width } = useWindowSize()
-
-    console.log('Board Rerender')
 
     const squares = board.map((bRow, rIdx) => (
         <div className={classes.row} key={rIdx}>

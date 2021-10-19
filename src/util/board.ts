@@ -32,19 +32,34 @@ export const emptyBoard = (height:number, width:number) => {
 export const fillBoard: fillBoardType = (board, points) => {
     
     points.forEach((p) => {
-        if (p.x >= 0 && p.x < board.length && p.y >= 0 && p.y < board[0].length)        
-        board[p.x][p.y] = 1
+        if (p.x >= 0 && p.x < board.length && p.y >= 0 && p.y < board[0].length) {
+            board[p.x][p.y] = board[p.x][p.y] ? 0 : 1
+        }
     })
     
     return board
 }
 
-export const isBoardFilled:isBoardFilledType = (board) => {
-    const firstRowSum = board[0].reduce((ac, cv) => ac + cv , 0)
-    const lastRowSum = board[board.length - 1].reduce((ac, cv) => ac + cv , 0)
+export const toggleBoardPoint: toggleBoardPointType = (board, p) => {
+    if (p.x >= 0 && p.x < board.length && p.y >= 0 && p.y < board[0].length) {
+        board[p.x][p.y] = board[p.x][p.y] ? 0 : 1
+    }
 
-    return firstRowSum === lastRowSum && firstRowSum === board[0].length
+    return board
+}
+
+
+export const isBoardFilledWith:isBoardFilledWithType = (board, value) => {
+    return board.every(row => row.every(v => v === value))
+}
+
+export const isBoardFilledWithSameValues: isBoardFilledWithSameValuesType = (board) => {
+    const firstValue = board[0][0]
+
+    return isBoardFilledWith(board, firstValue)
 }
 
 type fillBoardType = (board: BoardType, points: PointType[]) => BoardType
-type isBoardFilledType = (board: BoardType) => boolean
+type toggleBoardPointType = (board: BoardType, point: PointType) => BoardType
+type isBoardFilledWithType = (board: BoardType, value: number) => boolean
+type isBoardFilledWithSameValuesType = (board: BoardType) => boolean

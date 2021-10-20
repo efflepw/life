@@ -59,7 +59,12 @@ export const isBoardFilledWithSameValues: isBoardFilledWithSameValuesType = (boa
     return isBoardFilledWith(board, firstValue)
 }
 
+export const clearBoard: clearBoardType = (board) => {
+    return [...board.map(r => r.map(_ => 0))]
+}
+
 type fillBoardType = (board: BoardType, points: PointType[]) => BoardType
 type toggleBoardPointType = (board: BoardType, point: PointType) => BoardType
 type isBoardFilledWithType = (board: BoardType, value: number) => boolean
 type isBoardFilledWithSameValuesType = (board: BoardType) => boolean
+type clearBoardType = (board: BoardType) => BoardType

@@ -1,6 +1,8 @@
 import { InferActionsTypes, BaseThunkType } from './store'
 import { boardActions } from './board'
 import { PointType } from '../types/board'
+import { toggleGamePoint } from '../util/game'
+import { toggleBoardPoint } from '../util/board'
 
 // initial state
 const initialState = {
@@ -17,6 +19,11 @@ const gameReducer = (state = initialState, action: GameActionsTypes): GameInitia
                 ...state,
                 ...action.data
             }
+        case 'game/PLACE_POINT':
+            return {
+                ...state,
+                placedPoints: toggleGamePoint(state.placedPoints, action.point),
+            }
         default:
             return state
     }
@@ -25,17 +32,23 @@ const gameReducer = (state = initialState, action: GameActionsTypes): GameInitia
 
 export const gameActions = {
     setGameData: (data: Partial<GameInitialStateType>) => ({ type: 'game/SET_GAME_DATA', data } as const),
+    placePoint: (point: PointType) => ({ type: 'game/PLACE_POINT', point } as const),
     setBoardData: boardActions.setBoardData
 }
 
 
 // thunks
 export const lifeGame = (): ThunkType => async (dispatch, getState) => {
-    // const state = getState()
-    // const board = state.board.board
-    // const points = state.game.placedPoints
 
-    
+}
+
+export const placeGamePoint = (point: PointType): ThunkType => async (dispatch, getState) => {
+    const state = getState()
+    const initialBoard = state.board.board
+    const board = toggleBoardPoint([...initialBoard], point)
+
+    dispatch(gameActions.placePoint(point))
+    dispatch(gameActions.setBoardData({ board }))
 }
 
 export default gameReducer

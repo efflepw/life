@@ -1,5 +1,3 @@
-import { isEqual } from "lodash";
-
 import { InferActionsTypes, BaseThunkType } from './store'
 import { boardActions } from './board'
 import { fillBoard, isBoardFilledWithSameValues } from '../util/board'

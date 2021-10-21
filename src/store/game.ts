@@ -1,13 +1,14 @@
 import { InferActionsTypes, BaseThunkType } from './store'
 import { boardActions } from './board'
 import { PointType } from '../types/board'
-import { toggleGamePoint } from '../util/game'
-import { toggleBoardPoint } from '../util/board'
+import { lifeGameStep, toggleGamePoint } from '../util/game'
+import { isBoardFilledWithSameValues, toggleBoardPoint } from '../util/board'
 
 // initial state
 const initialState = {
     placedPoints: [] as PointType[],
-    step: 0,
+    shouldContinue: false,
+    timeout: 100
 }
 
 
@@ -33,13 +34,41 @@ const gameReducer = (state = initialState, action: GameActionsTypes): GameInitia
 export const gameActions = {
     setGameData: (data: Partial<GameInitialStateType>) => ({ type: 'game/SET_GAME_DATA', data } as const),
     placePoint: (point: PointType) => ({ type: 'game/PLACE_POINT', point } as const),
-    setBoardData: boardActions.setBoardData
+    setBoardData: boardActions.setBoardData,
+    toogleSidebar: boardActions.toogleSidebar,
 }
 
 
 // thunks
 export const lifeGame = (): ThunkType => async (dispatch, getState) => {
+    const state = getState()
+    const initialBoard = state.board.board
+    const gameState = state.game
 
+    const board = lifeGameStep(initialBoard, gameState.placedPoints)
+    const isBoardFilledRes = isBoardFilledWithSameValues(board)
+
+    if (isBoardFilledRes) {
+        dispatch(gameActions.setGameData({ shouldContinue: false }))
+        dispatch(gameActions.setBoardData({ board }))
+    } else if (gameState.shouldContinue) {
+        dispatch(gameActions.setBoardData({ board }))
+        setTimeout(() => dispatch(lifeGame()), gameState.timeout)
+    }
+}
+
+export const startLifeGame = (): ThunkType => async (dispatch, getState) => {
+    const state = getState()
+
+    if (state.game.placedPoints.length) {
+        dispatch(gameActions.setGameData({ shouldContinue: true }))
+        dispatch(lifeGame())
+        dispatch(gameActions.toogleSidebar())
+    }
+}
+
+export const stopLifeGame = (): ThunkType => async (dispatch) => {
+    dispatch(gameActions.setGameData({ shouldContinue: false }))
 }
 
 export const placeGamePoint = (point: PointType): ThunkType => async (dispatch, getState) => {

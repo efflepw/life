@@ -1,7 +1,7 @@
 import { Provider } from 'react-redux'
 import { WindowSizeProvider } from './context'
 import store from './store/store'
-import { Header, Board } from './components'
+import { Header, Board, Sidebar } from './components'
 import './App.scss'
 
 const App = () => {
@@ -10,6 +10,7 @@ const App = () => {
             <Provider store={store}>
                 <Header />
                 <Board />
+                <Sidebar />
             </Provider>
         </WindowSizeProvider>
     )

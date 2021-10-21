@@ -27,7 +27,7 @@ const animationReducer = (state = initialState, action: AnimationActionsTypes): 
 
 export const animationActions = {
     setAnimationData: (data: Partial<AnimationInitialStateType>) => ({ type: 'animation/SET_ANIMATION_DATA', data } as const),
-    setBoardData: boardActions.setBoardData
+    setBoardData: boardActions.setBoardData,
 }
 
 
@@ -52,9 +52,9 @@ export const startBubbleAnimation = (startPoint: PointType): ThunkType => async 
 
     const board = fillBoard(initialBoard, [ startPoint ])
     
-    dispatch(animationActions.setBoardData({ board }))
+    dispatch(animationActions.setBoardData({ board, sidebarIsOpen: false }))
     dispatch(animationActions.setAnimationData({ startPoint, step: 0 }))
-
+    
     dispatch(bubbleAnimation(startPoint, 1))
 }
 

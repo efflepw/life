@@ -1,15 +1,16 @@
+import { sidebarOptionTypesEnum } from '../types/sidebar'
 import { emptyBoard } from '../util/board'
 import { InferActionsTypes, BaseThunkType } from './store'
 
-
 // initial state
 const initialState = {
+    sidebarIsOpen: true,
+    openedOption: sidebarOptionTypesEnum.Game,
     board: [[]] as number[][],
     cWidth: 0,
     cHeight: 0,
     maxSteps: 0
 }
-
 
 // reducer
 const boardReducer = (state = initialState, action: BoardActionsTypes): BoardInitialStateType => {
@@ -18,6 +19,11 @@ const boardReducer = (state = initialState, action: BoardActionsTypes): BoardIni
             return {
                 ...state,
                 ...action.data
+            }
+        case 'board/TOOGLE_SIDEBAR':
+            return {
+                ...state,
+                sidebarIsOpen: !state.sidebarIsOpen
             }
         case 'board/REFRESH_BOARD':
             return {
@@ -31,7 +37,8 @@ const boardReducer = (state = initialState, action: BoardActionsTypes): BoardIni
 
 export const boardActions = {
     setBoardData: (data: Partial<BoardInitialStateType>) => ({ type: 'board/SET_BOARD_DATA', data } as const),
-    refreshBoard: () => ({ type: 'board/REFRESH_BOARD' } as const)
+    toogleSidebar: () => ({ type: 'board/TOOGLE_SIDEBAR' } as const),
+    refreshBoard: () => ({ type: 'board/REFRESH_BOARD' } as const),
 }
 
 

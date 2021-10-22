@@ -10,14 +10,14 @@ import { sidebarOptionTypesEnum } from '../../types/sidebar'
 import { HEADER_HEIGHT_PX } from '../../consts/common'
 import Board from './Board'
 
-const BoardContainer: FC<PropsType> = ({ board, openedOption, createEmptyBoard, startBubbleAnimation, placeGamePoint }) => {
+const BoardContainer: FC<PropsType> = ({ board, openedOption, shouldContinue, createEmptyBoard, startBubbleAnimation, placeGamePoint }) => {
     const { height, width } = useWindowSize()
     const boardSizeStyles = { height: `${height - HEADER_HEIGHT_PX}px`, width: `${width}px` }
 
     const boardClick = (point: PointType) => {
         if (openedOption === sidebarOptionTypesEnum.Game) {
             placeGamePoint(point)
-        } else {
+        } else if (openedOption === sidebarOptionTypesEnum.Animation && !shouldContinue) {
             startBubbleAnimation(point)
         }
     }
@@ -33,6 +33,7 @@ const BoardContainer: FC<PropsType> = ({ board, openedOption, createEmptyBoard, 
 const mapStateToProps = (state: AppStateType): ArticleStateInterface => ({
     board: state.board.board,
     openedOption: state.board.openedOption,
+    shouldContinue: state.game.shouldContinue,
 })
 
 export default connect(mapStateToProps, { createEmptyBoard, startBubbleAnimation, placeGamePoint })(BoardContainer)
@@ -40,6 +41,7 @@ export default connect(mapStateToProps, { createEmptyBoard, startBubbleAnimation
 export interface ArticleStateInterface {
     board: number[][]
     openedOption: sidebarOptionTypesEnum
+    shouldContinue: boolean
 }
 export interface ArticleDispatchInterface {
     createEmptyBoard: (height: number, width: number) => void

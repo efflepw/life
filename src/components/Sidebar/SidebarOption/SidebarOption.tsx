@@ -15,7 +15,11 @@ const SidebarOption: FC<PropsType> = ({ option, openedOption, setOpenedOption })
             <div onClick={headerClick}>
                 <h3>{option.name}</h3>
             </div>
-            {isOpened && <Content />}
+            {isOpened && (
+                <div className={classes.sidebarOptionContent}>
+                    <Content />
+                </div>
+            )}
         </div>
     )
 }

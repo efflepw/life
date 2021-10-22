@@ -7,7 +7,7 @@ const Board: FC<PropsType> = ({ board, boardSizeStyles, boardClick }) => {
     const squares = board.map((bRow, rIdx) => (
         <div className={classes.row} key={rIdx}>
             {bRow.map((bSquare, squareIdx) => (
-                <Square key={squareIdx} value={bSquare} click={() => boardClick({ x: rIdx, y: squareIdx })} />
+                <Square key={squareIdx} value={bSquare} click={() => boardClick({ x: squareIdx, y: rIdx })} />
             ))}
         </div>
     ))

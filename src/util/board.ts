@@ -29,11 +29,21 @@ export const emptyBoard = (height:number, width:number) => {
     }
 }
 
-export const fillBoard: fillBoardType = (board, points) => {
+export const fillBoardWithPoints: fillBoardType = (board, points) => {
     
     points.forEach((p) => {
-        if (p.x >= 0 && p.x < board.length && p.y >= 0 && p.y < board[0].length) {
-            board[p.x][p.y] = board[p.x][p.y] ? 0 : 1
+        if (p.y >= 0 && p.y < board.length && p.x >= 0 && p.x < board[0].length) {
+            board[p.y][p.x] = 1
+        }
+    })
+    
+    return board
+}
+
+export const toggleBoardWithPoints: fillBoardType = (board, points) => {
+    points.forEach((p) => {
+        if (p.y >= 0 && p.y < board.length && p.x >= 0 && p.x < board[0].length) {
+            board[p.y][p.x] = board[p.y][p.x] ? 0 : 1
         }
     })
     
@@ -41,8 +51,8 @@ export const fillBoard: fillBoardType = (board, points) => {
 }
 
 export const toggleBoardPoint: toggleBoardPointType = (board, p) => {
-    if (p.x >= 0 && p.x < board.length && p.y >= 0 && p.y < board[0].length) {
-        board[p.x][p.y] = board[p.x][p.y] ? 0 : 1
+    if (p.y >= 0 && p.y < board.length && p.x >= 0 && p.x < board[0].length) {
+        board[p.y][p.x] = board[p.y][p.x] ? 0 : 1
     }
 
     return board
@@ -61,6 +71,13 @@ export const isBoardFilledWithSameValues: isBoardFilledWithSameValuesType = (boa
 
 export const clearBoard: clearBoardType = (board) => {
     return [...board.map(r => r.map(_ => 0))]
+}
+
+export const replaceBoardPoints: fillBoardType = (board, points) => {
+    const clearedBoard = clearBoard(board)
+    const newBoard = fillBoardWithPoints(clearedBoard, points)
+    
+    return newBoard
 }
 
 type fillBoardType = (board: BoardType, points: PointType[]) => BoardType

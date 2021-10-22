@@ -1,6 +1,7 @@
 import { sidebarOptionTypesEnum } from '../types/sidebar'
 import { emptyBoard } from '../util/board'
 import { InferActionsTypes, BaseThunkType } from './store'
+import { clearBoard } from '../util/board'
 
 // initial state
 const initialState = {
@@ -25,6 +26,11 @@ const boardReducer = (state = initialState, action: BoardActionsTypes): BoardIni
                 ...state,
                 sidebarIsOpen: !state.sidebarIsOpen
             }
+        case 'board/CLEAR_BOARD':
+            return {
+                ...state,
+                board: clearBoard(state.board)
+            }
         case 'board/REFRESH_BOARD':
             return {
                 ...initialState
@@ -38,6 +44,7 @@ const boardReducer = (state = initialState, action: BoardActionsTypes): BoardIni
 export const boardActions = {
     setBoardData: (data: Partial<BoardInitialStateType>) => ({ type: 'board/SET_BOARD_DATA', data } as const),
     toogleSidebar: () => ({ type: 'board/TOOGLE_SIDEBAR' } as const),
+    clearBoard: () => ({ type: 'board/CLEAR_BOARD' } as const),
     refreshBoard: () => ({ type: 'board/REFRESH_BOARD' } as const),
 }
 

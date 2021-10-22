@@ -1,5 +1,5 @@
 import *  as CNSTS from '../consts/common'
-import { emptyBoard, fillBoard, isBoardFilledWith, isBoardFilledWithSameValues } from './board'
+import { emptyBoard, toggleBoardWithPoints, isBoardFilledWith, isBoardFilledWithSameValues } from './board'
 
 describe('board creation: ', () => {
     test('3x3', () => {
@@ -36,28 +36,28 @@ describe('board filling', () => {
         const board = [[0,0,0],[0,0,0],[0,0,0]]
         const boardToBe = [[0,0,0],[0,1,0],[0,0,0]]
 
-        expect(fillBoard(board, [{ x: 1, y: 1 }])).toEqual(boardToBe)
+        expect(toggleBoardWithPoints(board, [{ x: 1, y: 1 }])).toEqual(boardToBe)
     })
 
     test('4 elements', () => {
         const board = [[0,0,0],[0,1,0],[0,0,0]]
         const boardToBe = [[0,1,0],[1,1,1],[0,1,0]]
 
-        expect(fillBoard(board, [{ x: 0, y: 1 }, { x: 1, y: 0 }, { x: 1, y: 2 }, { x: 2, y: 1 }])).toEqual(boardToBe)
+        expect(toggleBoardWithPoints(board, [{ x: 0, y: 1 }, { x: 1, y: 0 }, { x: 1, y: 2 }, { x: 2, y: 1 }])).toEqual(boardToBe)
     })
 
     test('element out of table #1', () => {
         const board = [[0,0,0],[0,1,0],[0,0,0]]
         const boardToBe = [[0,0,0],[0,1,0],[0,0,0]]
 
-        expect(fillBoard(board, [{ x: 3, y: 3 }])).toEqual(boardToBe)
+        expect(toggleBoardWithPoints(board, [{ x: 3, y: 3 }])).toEqual(boardToBe)
     })
 
     test('element out of table #2', () => {
         const board = [[]]
 
-        expect(fillBoard(board, [{ x: 0, y: 0 }])).toEqual(board)
-        expect(fillBoard(board, [{ x: 1, y: 1 }])).toEqual(board)
+        expect(toggleBoardWithPoints([...board], [{ x: 0, y: 0 }])).toEqual(board)
+        expect(toggleBoardWithPoints([...board], [{ x: 1, y: 1 }])).toEqual(board)
     })
 
     test('is board filled with', () => {

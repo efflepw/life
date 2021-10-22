@@ -8,7 +8,8 @@ const mapStateToProps = (state: AppStateType) => ({
 })
 
 const mapDispatchToProps = {
-    toogleSidebar: boardActions.toogleSidebar
+    toogleSidebar: boardActions.toogleSidebar,
+    clearBoard: boardActions.clearBoard
 }
 
 export default connect<SidebarOptionStatePropsType, SidebarOptionDispatchPropsType, {}, AppStateType>(mapStateToProps, mapDispatchToProps)(Sidebar)

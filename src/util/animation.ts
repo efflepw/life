@@ -1,5 +1,5 @@
 import { BoardType, PointType } from '../types/board'
-import { fillBoard } from './board'
+import { toggleBoardWithPoints } from './board'
 
 // creating an array of numbers that are in a given limits
 export const numbersBetween:numbersBetweenType = (c1, c2) => {
@@ -42,7 +42,7 @@ export const makeBubbleAnimationStep: bubbleAnimationType = (board, startPoint, 
 
     const pointsToFill = [...toFillBottomLeft, ...toFillLeftTop, ...toFillTopRight, ...toFillRightBottom, topPoint, rightPoint, bottomPoint, leftPoint]
 
-    const filledBoard = fillBoard([...board], pointsToFill)
+    const filledBoard = toggleBoardWithPoints([...board], pointsToFill)
 
     return filledBoard
 }

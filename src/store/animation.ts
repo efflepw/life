@@ -1,6 +1,6 @@
 import { InferActionsTypes, BaseThunkType } from './store'
 import { boardActions } from './board'
-import { fillBoard, isBoardFilledWithSameValues } from '../util/board'
+import { toggleBoardWithPoints, isBoardFilledWithSameValues } from '../util/board'
 import { makeBubbleAnimationStep } from '../util/animation'
 import { PointType } from '../types/board'
 
@@ -50,7 +50,7 @@ export const bubbleAnimation = (startPoint: PointType, step: number): ThunkType 
 export const startBubbleAnimation = (startPoint: PointType): ThunkType => async (dispatch, getState) => {
     const initialBoard = getState().board.board
 
-    const board = fillBoard(initialBoard, [ startPoint ])
+    const board = toggleBoardWithPoints(initialBoard, [ startPoint ])
     
     dispatch(animationActions.setBoardData({ board, sidebarIsOpen: false }))
     dispatch(animationActions.setAnimationData({ startPoint, step: 0 }))

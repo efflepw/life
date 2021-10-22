@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { Button } from '../../Button'
 
 const GameOption: FC<PropsType> = ({ shouldContinue, startLifeGame, stopLifeGame }) => {
     const startGame = () => {
@@ -12,8 +13,7 @@ const GameOption: FC<PropsType> = ({ shouldContinue, startLifeGame, stopLifeGame
     return (
         <div>
             <p>Place inital life ceils points on the board</p>
-
-            <button onClick={startGame}>{shouldContinue ? 'Stop' : 'Start'}</button>
+            <Button label={shouldContinue ? 'Stop' : 'Start'} click={startGame} />
         </div>
     )
 }

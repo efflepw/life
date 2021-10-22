@@ -1,4 +1,4 @@
-import { toggleGamePoint, countPointsAround } from './game'
+import { toggleGamePoint, countPointsAround, lifeGameStep } from './game'
 import { PointType } from "../types/board"
 
 describe('toggle game point: ', () => {
@@ -33,15 +33,44 @@ describe('count points around', () => {
     const board1 = [[0,0,0],[0,0,0],[0,0,0],[0,0,0]]
     const board2 = [[0,0,0],[0,1,0],[0,0,0],[0,0,0]]
     const board3 = [[1,1,1],[1,1,1],[1,1,1],[1,1,1]]
+    const board4 = [[0,1,0,0,0,0],[0,1,0,0,0,0],[0,1,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]]
+    const board5 = [[0,1,0,0,0,0],[0,1,0,0,0,0],[0,1,0,0,0,0],[0,0,0,0,1,0],[0,0,0,0,1,0],[0,0,0,0,1,0]]
+
+    const point1 = { x: 1, y: 1 }
+    const point2 = { x: 0, y: 0 }
+    const point3 = { x: 3, y: 2 }
+    const point4 = { x: 2, y: 1 }
+    const point5 = { x: 2, y: 3 }
 
     test('count points answer correct', () => {
-        const point1 = { x: 1, y: 1 } as PointType
-        const point2 = { x: 0, y: 0 } as PointType
-
         expect(countPointsAround(board1, point1)).toBe(0)
         expect(countPointsAround(board2, point1)).toBe(0)
         expect(countPointsAround(board2, point2)).toBe(1)
         expect(countPointsAround(board3, point1)).toBe(8)
         expect(countPointsAround(board3, point2)).toBe(3)
+
+        expect(countPointsAround(board4, point1)).toBe(2)
+        expect(countPointsAround(board4, point2)).toBe(2)
+        expect(countPointsAround(board4, point3)).toBe(0)
+        expect(countPointsAround(board4, point4)).toBe(3)
+        expect(countPointsAround(board4, point5)).toBe(1)
+
+        expect(countPointsAround(board5, point1)).toBe(2)
+        expect(countPointsAround(board5, point2)).toBe(2)
+        expect(countPointsAround(board5, point3)).toBe(1)
+        expect(countPointsAround(board5, point4)).toBe(3)
+    })
+})
+
+describe('life game', () => {
+    const placedPointsStep1 = [{ x: 1, y: 2 }, { x: 2, y: 2 }, { x: 1, y: 3 }]
+    const placedPointsStep2 = [{ x: 1, y: 2 }, { x: 2, y: 2 }, { x: 1, y: 3 }, { x: 2, y: 3 }]
+
+    const boardStep1 = [[0,0,0,0,0,0],[0,0,0,0,0,0],[0,1,1,0,0,0],[0,1,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]]
+    const boardStep2 = [[0,0,0,0,0,0],[0,0,0,0,0,0],[0,1,1,0,0,0],[0,1,1,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]]
+
+    test('life game step', () => {
+        expect(lifeGameStep(boardStep1, placedPointsStep1)).toStrictEqual(placedPointsStep2)
+        expect(lifeGameStep(boardStep2, placedPointsStep2)).toStrictEqual(placedPointsStep2)
     })
 })

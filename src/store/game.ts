@@ -2,7 +2,7 @@ import { InferActionsTypes, BaseThunkType } from './store'
 import { boardActions } from './board'
 import { PointType } from '../types/board'
 import { lifeGameStep, toggleGamePoint } from '../util/game'
-import { isBoardFilledWithSameValues, toggleBoardPoint } from '../util/board'
+import { isBoardFilledWithSameValues, replaceBoardPoints, toggleBoardPoint } from '../util/board'
 
 // initial state
 const initialState = {
@@ -45,13 +45,16 @@ export const lifeGame = (): ThunkType => async (dispatch, getState) => {
     const initialBoard = state.board.board
     const gameState = state.game
 
-    const board = lifeGameStep(initialBoard, gameState.placedPoints)
+    const pointsToPlace = lifeGameStep(initialBoard, gameState.placedPoints)
+    const board = replaceBoardPoints(initialBoard, pointsToPlace)
+    
     const isBoardFilledRes = isBoardFilledWithSameValues(board)
 
     if (isBoardFilledRes) {
         dispatch(gameActions.setGameData({ shouldContinue: false }))
         dispatch(gameActions.setBoardData({ board }))
     } else if (gameState.shouldContinue) {
+        dispatch(gameActions.setGameData({ placedPoints: pointsToPlace }))
         dispatch(gameActions.setBoardData({ board }))
         setTimeout(() => dispatch(lifeGame()), gameState.timeout)
     }

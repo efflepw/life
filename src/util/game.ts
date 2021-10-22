@@ -1,5 +1,5 @@
 import { BoardType, PointType } from "../types/board"
-import { clearBoard, fillBoard } from "./board"
+import { clearBoard, fillBoardWithPoints } from "./board"
 
 export const toggleGamePoint:toggleGamePointType = (points, point) => {
     if (points.find(p => p.x === point.x && p.y === point.y)) {
@@ -28,12 +28,16 @@ const getPointsAround: getPointsAroundType = (point) => {
 
 export const countPointsAround: countPointsAroundType = (board, point) => {
     const pointsAround = getPointsAround(point)
-    const pointsAroundSum = pointsAround.reduce((ac, cv) => ac + (board[cv.x] && board[cv.x][cv.y] ? board[cv.x][cv.y] : 0), 0)
+    const pointsAroundSum = pointsAround.reduce((ac, cv) => {
+        const pointValue = board[cv.y] && board[cv.y][cv.x] ? board[cv.y][cv.x] : 0
+        
+        return ac + pointValue
+    }, 0)
 
     return pointsAroundSum
 }
 
-export const lifeGameStep: liveGameType = (board, placedPoints) => {
+export const lifeGameStep: liveGameStepType = (board, placedPoints) => {
     const pointsToPlace = [] as PointType[]
     const deadPointsToCheck = [] as PointType[]
 
@@ -43,9 +47,9 @@ export const lifeGameStep: liveGameType = (board, placedPoints) => {
 
         pointsAround.forEach((pa) => {
             const pointAlreadyWrited = deadPointsToCheck.find(ptc => ptc.x === pa.x && ptc.y === pa.y)
-            const pointIsNotPlaced = placedPoints.find(ptc => ptc.x === pa.x && ptc.y === pa.y)
+            const pointAlreadyPlaced = placedPoints.find(ptc => ptc.x === pa.x && ptc.y === pa.y)
 
-            if (!pointAlreadyWrited && !pointIsNotPlaced) {
+            if (!(pointAlreadyWrited || pointAlreadyPlaced)) {
                 deadPointsToCheck.push(pa)
             }
         })
@@ -69,16 +73,10 @@ export const lifeGameStep: liveGameType = (board, placedPoints) => {
         }
     })
 
-    // board clearing
-    const clearedBoard = clearBoard(board)
-    
-    // place on board new points
-    const newBoard = fillBoard(clearedBoard, pointsToPlace)
-    
-    return newBoard
+    return pointsToPlace
 }
 
 type toggleGamePointType = (points: PointType[], point: PointType) => PointType[]
 type getPointsAroundType = (point: PointType) => PointType[]
 type countPointsAroundType = (board: BoardType, point: PointType) => number
-type liveGameType = (board: BoardType, placedPoints: PointType[]) => BoardType
+type liveGameStepType = (board: BoardType, placedPoints: PointType[]) => PointType[]

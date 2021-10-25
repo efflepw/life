@@ -5,7 +5,6 @@ import { GameOption } from './GameOption'
 import { AnimationOption } from './AnimationOption'
 import { SidebarOption } from './SidebarOption'
 import { Button } from '../Button'
-import leftArrowIcon from '../../assets/icons/leftArrow.svg'
 import classes from './Sidebar.module.scss'
 
 const OPTIONS = [

@@ -1,5 +1,4 @@
 import { BoardType, PointType } from "../types/board"
-import { clearBoard, fillBoardWithPoints } from "./board"
 
 export const toggleGamePoint:toggleGamePointType = (points, point) => {
     if (points.find(p => p.x === point.x && p.y === point.y)) {
